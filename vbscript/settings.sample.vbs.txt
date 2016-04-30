@@ -1,0 +1,17 @@
+
+
+' API Connection setings
+Dim api_token, api_end_point
+api_token = "[YOUR_API_KEY]"
+api_end_point = "https://[YOUR_URL]/api/"
+
+
+' Invoice Download Settings
+Dim invoice_download_path
+invoice_download_path = "./downloads/invoices/"
+
+
+
+' Invoice Sage download folder
+Dim invoice_batch_folder 
+invoice_batch_folder = "./downloads/sage_batch"
