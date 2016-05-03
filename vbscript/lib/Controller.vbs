@@ -15,13 +15,28 @@ Class Controller
 			Select Case route 
 				case "invoice_download"
 					call routeInvoiceDownload()
-					
+				
+				case "invoice_batch_csv_download"
+					call routeInvoiceBatchCsvDownload()
 				case else 
 					call core.log("ROUTE","Route not found")
 			End Select
 			
 			
 	End Function
+	
+	
+	
+	' Invoice CSV download
+	Public Sub routeInvoiceBatchCsvDownload()
+	
+		' Import requiremetns
+		call core.Import("InvoiceBatchCsvDownload")
+			call core.log("ROUTE","Routing to invoice_batch_csv_download")
+		set queue = new InvoiceBatchCsvDownload
+		call queue.downloadAll()
+	
+	End Sub 
 	
 	
 	' Invoice download
