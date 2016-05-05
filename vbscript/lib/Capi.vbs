@@ -34,6 +34,8 @@ Class Capi
 		Dim url
 		url = api_end_point&method&"?__token="&api_token
 		http.open "POST",url,false 
+		call http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+		
 		core.log "CAPI", url
 		http.send payload
 		getRaw = http.responseText
@@ -46,10 +48,12 @@ Class Capi
 	Public Function getJSON (method, payload)
 		Dim url
 		url = api_end_point&method&"?__token="&api_token
+		
 		http.open "POST",url,false 
+		call http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 		
 		http.send payload
-
+		call core.log("RAW",http.responseText)
 		
 		
 		set response = new VbJson

@@ -7,6 +7,41 @@ Function download(url,path)
 
 End Function
 
+
+Function downloadWithFullPath( url, full_path )
+	  ' Standard housekeeping
+	  
+	    Const ForReading = 1, ForWriting = 2, ForAppending = 8
+		call  core.log("PATH",full_path)
+		
+		 ' Create a File System Object
+	    Dim objFSO : Set objFSO = CreateObject( "Scripting.FileSystemObject" )
+	
+	    ' Create or open the target file
+		call  core.log("PATH","1")
+	    Set objFile = objFSO.OpenTextFile( full_path, ForWriting, True )
+		call  core.log("PATH","2")
+	    ' Create an HTTP object
+	   Dim objHTTP : Set objHTTP = CreateObject( "WinHttp.WinHttpRequest.5.1" )
+	
+	    ' Download the specified URL
+	    objHTTP.Open "GET", url, False
+	    objHTTP.Send
+	
+	    ' Write the downloaded byte stream to the target file
+	    For i = 1 To LenB( objHTTP.ResponseBody )
+	        objFile.Write Chr( AscB( MidB( objHTTP.ResponseBody, i, 1 ) ) )
+	    Next
+	
+	    ' Close the target file
+	    objFile.Close( )
+		call core.log("Downloaded File",url&" -----> "&full_path)
+		downloadWithFullPath = full_path
+	End Function
+
+
+
+
 	Function downloadWithExtension( url, path, ext )
 	
 	    ' Standard housekeeping

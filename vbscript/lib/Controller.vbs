@@ -18,12 +18,30 @@ Class Controller
 				
 				case "invoice_batch_csv_download"
 					call routeInvoiceBatchCsvDownload()
+					
+				case "csv_report"
+					call routeCsvReport()
 				case else 
 					call core.log("ROUTE","Route not found")
 			End Select
 			
 			
 	End Function
+	
+	Public Sub routeCsvReport
+	
+		if  WScript.Arguments.count <3 then 
+				call core.log("Error","Pass the report tag and path in the window")
+				exit Sub
+		end if
+
+		
+		call core.Import("CSVDownload") 
+		call core.log("ROUTE","Routing to csv_report")
+		set queue = new CSVDownload
+		call queue.download(WScript.Arguments(1), WScript.Arguments(2))
+	
+	End Sub
 	
 	
 	
@@ -32,7 +50,7 @@ Class Controller
 	
 		' Import requiremetns
 		call core.Import("InvoiceBatchCsvDownload")
-			call core.log("ROUTE","Routing to invoice_batch_csv_download")
+		call core.log("ROUTE","Routing to invoice_batch_csv_download")
 		set queue = new InvoiceBatchCsvDownload
 		call queue.downloadAll()
 	
